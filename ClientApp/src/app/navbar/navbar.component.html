@@ -38,7 +38,9 @@
       </ul>
       <ul *ngIf="loggedIn()" class="navbar-nav ml-auto">
         <li class="navbar-nav">
-          <a href="" class="nav-link">{{authService.decodedToken.unique_name }}</a>
+          <a [routerLink]="['/member/edit']" class="nav-link">{{
+            authService.decodedToken.unique_name
+          }}</a>
         </li>
         <li class="navbar-nav">
           <a (click)="logout()" class="nav-link">Logout</a>
@@ -71,11 +73,7 @@
           name="password"
           [(ngModel)]="model.password"
         />
-        <button
-
-          class="btn btn-success btn-sm my-2 my-sm-0"
-          type="submit"
-        >
+        <button class="btn btn-success btn-sm my-2 my-sm-0" type="submit">
           Login
         </button>
       </form>

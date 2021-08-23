@@ -3,7 +3,7 @@
       <div class="col-sm-4">
           <div class="card">
               <div class="img-container">
-                  <img src="{{ user?.profileImageUrl }}" class="card-img-top img-thumbnail" alt="{{ user?.name }}">
+                  <img src="{{ user?.profileImageUrl || '../../../../../assets/user.jpg' }}" class="card-img-top img-thumbnail" alt="{{ user?.name }}">
               </div>
               <div class="card-body">
                   <div>
@@ -15,8 +15,12 @@
                       <p>{{ user?.age }}</p>
                   </div>
                   <div>
-                      <strong>Last Active</strong>
-                      <p>{{ user?.lastActive }}</p>
+                    <strong>Created Date</strong>
+                    <p>{{ user?.created | date: 'shortDate' }}</p>
+                  </div>
+                  <div>
+                    <strong>Last Active</strong>
+                    <p>{{ user?.lastActive | timeago }}</p>
                   </div>
               </div>
           </div>
