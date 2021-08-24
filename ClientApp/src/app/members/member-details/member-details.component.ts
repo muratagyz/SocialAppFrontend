@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/_models/user';
 import { AlertifyService } from 'src/app/_services/alertifyjs.service';
+import { AuthService } from 'src/app/_services/auth.service';
 import { userService } from 'src/app/_services/user.service';
 
 @Component({
@@ -11,24 +12,33 @@ import { userService } from 'src/app/_services/user.service';
 })
 export class MemberDetailsComponent implements OnInit {
   user: User;
+  followText: string = 'Follow';
   constructor(
     private userService: userService,
     private alertify: AlertifyService,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getUser();
+    this.route.data.subscribe((data) => {
+      this.user = data.user;
+    });
   }
 
-  getUser() {
-    this.userService.getUser(+this.route.snapshot.params['id']).subscribe(
-      (user) => {
-        this.user = user;
-      },
-      (err) => {
-        this.alertify.error(err);
-      }
-    );
+  followUser(userId: number) {
+    this.userService
+      .followUser(this.authService.decodedToken.nameid, userId)
+      .subscribe(
+        (result) => {
+          this.alertify.success(
+            this.user.name + ' kullanıcısı takip ediyorsunuz'
+          );
+          this.followText = 'You Are following';
+        },
+        (err) => {
+          this.alertify.error(err);
+        }
+      );
   }
 }

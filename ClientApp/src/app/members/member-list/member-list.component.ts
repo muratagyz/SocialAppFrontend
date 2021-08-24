@@ -10,6 +10,8 @@ import { userService } from '../../_services/user.service';
 })
 export class MemberListComponent implements OnInit {
   users: User[];
+  public loading = false;
+  userParams: any = {};
   constructor(
     private userService: userService,
     private alertify: AlertifyService
@@ -20,11 +22,14 @@ export class MemberListComponent implements OnInit {
   }
 
   getUsers() {
-    this.userService.getUsers().subscribe(
+    this.loading = true;
+    this.userService.getUsers(null, this.userParams).subscribe(
       (users) => {
+        this.loading = false;
         this.users = users;
       },
       (err) => {
+        this.loading = false;
         this.alertify.error(err);
       }
     );

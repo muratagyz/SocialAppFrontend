@@ -24,6 +24,8 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { TimeagoModule } from 'ngx-timeago';
+import { MemberDetailsResolver } from './_resolvers/member-details.resolver';
+import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -52,6 +54,14 @@ export function tokenGetter() {
     HttpClientModule,
     FormsModule,
     TimeagoModule.forRoot(),
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff',
+    }),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -70,6 +80,7 @@ export function tokenGetter() {
     },
     ,
     MemberEditResolver,
+    MemberDetailsResolver,
   ],
   bootstrap: [AppComponent],
 })

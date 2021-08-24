@@ -7,6 +7,7 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MessagesComponent } from './messages/messages.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthGuard } from './_guards/auth-guard';
+import { MemberDetailsResolver } from './_resolvers/member-details.resolver';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 
 export const appRoutes: Routes = [
@@ -22,6 +23,7 @@ export const appRoutes: Routes = [
   {
     path: 'members/:id',
     component: MemberDetailsComponent,
+    resolve: { user: MemberDetailsResolver },
     canActivate: [AuthGuard],
   },
   { path: 'friends', component: FriendListComponent, canActivate: [AuthGuard] },

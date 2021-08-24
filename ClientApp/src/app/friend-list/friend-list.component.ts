@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../_models/user';
+import { AlertifyService } from '../_services/alertifyjs.service';
+import { userService } from '../_services/user.service';
 
 @Component({
   selector: 'app-friend-list',
   templateUrl: './friend-list.component.html',
-  styleUrls: ['./friend-list.component.css']
+  styleUrls: ['./friend-list.component.css'],
 })
 export class FriendListComponent implements OnInit {
-
-  constructor() { }
+  users: User[];
+  followParams: string = 'followings';
+  constructor(
+    private userService: userService,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit(): void {
+    this.getUsers();
   }
 
+  getUsers() {
+    this.userService.getUsers(this.followParams).subscribe(
+      (users) => {
+        this.users = users;
+      },
+      (err) => {
+        this.alertify.error(err);
+      }
+    );
+  }
 }

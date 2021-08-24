@@ -16,6 +16,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status == 400) {
+          if (error.error) {
+            return throwError(error.error);
+          }
           if (error.error.errors) {
             const serverError = error.error;
             let errorMessage = '';
@@ -29,7 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.status == 401) {
           return throwError(error.statusText);
         }
-        if(error.status == 500){
+        if (error.status == 500) {
           return throwError(error.error.Message);
         }
       })
