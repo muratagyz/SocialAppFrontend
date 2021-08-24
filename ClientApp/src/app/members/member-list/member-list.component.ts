@@ -18,6 +18,7 @@ export class MemberListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userParams.orderby = 'lastactive';
     this.getUsers();
   }
 

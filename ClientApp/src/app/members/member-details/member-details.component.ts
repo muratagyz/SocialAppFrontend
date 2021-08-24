@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageCreateComponent } from 'src/app/messages/message-create/message-create.component';
 import { User } from 'src/app/_models/user';
 import { AlertifyService } from 'src/app/_services/alertifyjs.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -17,7 +19,8 @@ export class MemberDetailsComponent implements OnInit {
     private userService: userService,
     private alertify: AlertifyService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modelService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +43,9 @@ export class MemberDetailsComponent implements OnInit {
           this.alertify.error(err);
         }
       );
+  }
+  openSendMessageModel() {
+    const modelRef = this.modelService.open(MessageCreateComponent);
+    modelRef.componentInstance.recipientId = this.user.id;
   }
 }

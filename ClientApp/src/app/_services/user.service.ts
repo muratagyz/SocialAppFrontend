@@ -32,6 +32,8 @@ export class userService {
         params = params.append('country', userParams.country);
       if (userParams.city != null)
         params = params.append('city', userParams.city);
+      if (userParams.orderby != null)
+        params = params.append('orderby', userParams.orderby);
     }
 
     return this.http.get<User[]>(this.baseUrl, { params: params });
@@ -47,5 +49,9 @@ export class userService {
 
   followUser(followeId: number, userId: number) {
     return this.http.post(this.baseUrl + followeId + '/follow/' + userId, {});
+  }
+
+  sendMessage(id: number, message: any) {
+    return this.http.post(this.baseUrl + id + '/messages/', message);
   }
 }
